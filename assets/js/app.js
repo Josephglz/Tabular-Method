@@ -3,7 +3,9 @@ btnStepOne.addEventListener('click', function () {
     if (document.getElementById('numVariables').value > 0 && document.getElementById('numVariables').value <= 6) {
         document.getElementById('equation_input').classList.remove('hidden');
 
-        generateTruthTable(document.getElementById('numVariables').value);
+        const truthTable = generateTruthTable(document.getElementById('numVariables').value);
+        
+        displayTruthTable(truthTable);
     } else {
         alert('Por favor seleccione un número de variables válido');
     }
@@ -52,9 +54,4 @@ function generateTruthTable(numVariables) {
   
     document.body.appendChild(tableElement);
   }
-  
-  // Ejemplo de uso:
-  const numVariables = 4;
-  const truthTable = generateTruthTable(numVariables);
-  displayTruthTable(truthTable);
   
