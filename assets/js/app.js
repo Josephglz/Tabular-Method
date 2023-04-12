@@ -1,19 +1,31 @@
 var btnStepOne = document.getElementById('btnStepOne');
 var contFirst = document.getElementById('ContFirstAnim');
+var contentInputs = document.getElementById('contentInputs');
+var contTruthTable = document.getElementById('ContTruthTable');
+var contentEcuation = document.getElementById('contentEcuation');
 
 numVariables.addEventListener('change', function () {
-  contFirst.classList.add('slide-left');
+  contentInputs.classList.add('slide-left');
+  if (document.getElementById('numVariables').value > 0 && document.getElementById('numVariables').value <= 6) {
+    const truthTable = generateTruthTable(document.getElementById('numVariables').value);
+    contTruthTableAnim();
+
+    displayTruthTable(truthTable);
+  } else {
+    alert('Por favor seleccione un número de variables válido');
+  }
 });
 
 btnStepOne.addEventListener('click', function () {
   if (document.getElementById('numVariables').value > 0 && document.getElementById('numVariables').value <= 6) {
-
     document.getElementById('equation_input').classList.remove('hidden');
     document.getElementById('equation_input').classList.add('flex');
+    contNumBarAnim();
+    contEcuationAnim();
+    contentEcuation.setAttribute('style', 'transform: : tranlateX(50rem);');
+    // const truthTable = generateTruthTable(document.getElementById('numVariables').value);
 
-    const truthTable = generateTruthTable(document.getElementById('numVariables').value);
-
-    displayTruthTable(truthTable);
+    // displayTruthTable(truthTable);
   } else {
     alert('Por favor seleccione un número de variables válido');
   }
@@ -60,5 +72,55 @@ function displayTruthTable(truthTable) {
     tableElement.appendChild(dataRow);
   }
 
-  document.body.appendChild(tableElement);
+  contTruthTable.appendChild(tableElement);
+}
+
+function contTruthTableAnim() {
+
+  contTruthTable.animate(
+    [
+      { opacity: 0 },
+      { opacity: 1 }
+    ],
+    {
+      duration: 1000,
+      easing: 'ease-in-out',
+      iterations: 1,
+      direction: 'alternate',
+      fill: 'forwards'
+    }
+  );
+}
+
+function contNumBarAnim() {
+
+  contFirst.animate(
+    [
+      { transform: 'translateY(0rem)' },
+      { transform: 'translateY(-6rem)' }
+    ],
+    {
+      duration: 1000,
+      easing: 'ease-in-out',
+      iterations: 1,
+      direction: 'alternate',
+      fill: 'forwards'
+    }
+  );
+}
+
+function contEcuationAnim() {
+  contentEcuation.animate(
+    [
+      {transform: 'translate(-12.05rem, 0rem)', opacity: 0 },
+      {transform: 'translate(-12.05rem , -17rem)', opacity: 1}
+    ],
+    {
+      duration: 1000,
+      easing: 'ease-in-out',
+      iterations: 1,
+      direction: 'alternate',
+      fill: 'forwards'
+    }
+  );
 }
