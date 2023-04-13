@@ -132,8 +132,8 @@ function contNumBarAnim() {
 function contEcuationAnim() {
   contentEcuation.animate(
     [
-      {transform: 'translate(-12.05rem, 0rem)', opacity: 0 },
-      {transform: 'translate(-12.05rem , -17rem)', opacity: 1}
+      {transform: 'translate(-12.05rem, 0rem)', opacity: 0, zIndex: 1000 },
+      {transform: 'translate(-12.05rem , -20rem)', opacity: 1, zIndex: 1000}
     ],
     {
       duration: 1000,
