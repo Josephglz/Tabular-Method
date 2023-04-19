@@ -69,6 +69,9 @@
     }
 }
 
+#ContTruth {
+}
+
 #ContTruthTable {
     max-height: 20rem;
     overflow-x: auto;
