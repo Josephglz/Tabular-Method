@@ -8,7 +8,7 @@ var equationInput = document.getElementById('equation_input');
 numVariables.addEventListener('change', function () {
   contentInputs.classList.add('slide-left');
   if (document.getElementById('numVariables').value > 0 && document.getElementById('numVariables').value <= 6) {
-    
+
     equationInput.classList.remove('hidden');
     equationInput.classList.add('flex');
     contNumBarAnim();
@@ -19,7 +19,7 @@ numVariables.addEventListener('change', function () {
 });
 
 btnStepTwo.addEventListener('click', function () {
-  if(document.getElementById('equation').value != '') {
+  if (document.getElementById('equation').value != '') {
     var salidas = fixEquation(document.getElementById('equation').value)
 
     const truthTable = generateTruthTable(document.getElementById('numVariables').value, salidas);
@@ -31,32 +31,29 @@ btnStepTwo.addEventListener('click', function () {
 
 function fixEquation(equation) {
   var equationFixed = equation.slice(1, -1)
-  var finalEquation = equation.split(',')
+  var finalEquation = equationFixed.split(',')
   return finalEquation
 }
 
-function generateTruthTable(numVariables, salidas) {
-  const truthTable = [];
-  const numRows = Math.pow(2, numVariables);
+function generateTruthTable(numVariables, outputs) {
+  const rows = Math.pow(2, numVariables);
+  const table = [];
 
-  for (let i = 0; i < numRows; i++) {
+  const salidas = outputs.map(str => {
+    return Number(str);
+  });
+
+  for (let i = 0; i < rows; i++) {
     const row = [];
-    for (let j = 0; j < numVariables; j++) {
-      row.push(Math.floor(i / Math.pow(2, j)) % 2);
+    for (let j = numVariables - 1; j >= 0; j--) {
+      row.push((i >> j) & 1);
     }
-    truthTable.push(row);
+    const outputIndex = salidas.indexOf(i);
+    const outputValue = outputIndex >= 0 ? 1 : 0;
+    row.push(outputValue);
+    table.push(row);
   }
-
-  for(var i = 0; i < truthTable.length; i++){
-    for(var j = 0; j < salidas.length; j++) {
-        if(salidas[j] == i) {
-          truthTable[i][4] = 1
-        }else if(truthTable[i][4] != 1) {
-          truthTable[i][4] = 0
-        }
-    }
-  }
-  return truthTable;
+  return table;
 }
 
 const variablesLetter = {
@@ -77,7 +74,11 @@ function displayTruthTable(truthTable) {
   headerRow.classList.add('border-b', 'border-zinc-300', 'text-center', 'text-zinc-700', 'text-sm', 'group');
   for (let i = 0; i < truthTable[0].length; i++) {
     const headerCell = document.createElement('th');
-    headerCell.textContent = `${variablesLetter[i]}`;
+    if (i === truthTable[0].length - 1) {
+      headerCell.textContent = "S";
+    } else {
+      headerCell.textContent = `${variablesLetter[i]}`;
+    }
     headerCell.classList.add('border-r', 'border-zinc-300', 'p-2', 'text-center', 'group-hover:bg-zinc-900');
     headerRow.appendChild(headerCell);
   }
@@ -86,10 +87,10 @@ function displayTruthTable(truthTable) {
   // Crear filas de datos
   for (let i = 0; i < truthTable.length; i++) {
     const dataRow = document.createElement('tr');
-    dataRow.classList.add('border' ,'border-b-4', 'border-zinc-300', 'text-center', 'text-sm', 'group', 'bg-zinc-100');
+    dataRow.classList.add('border', 'border-b-4', 'border-zinc-300', 'text-center', 'text-sm', 'group', 'bg-zinc-100');
     for (let j = 0; j < truthTable[i].length; j++) {
       const dataCell = document.createElement('td');
-      dataCell.classList.add('border' ,'border-r-4', 'border-zinc-300', 'p-2', 'group-hover:bg-zinc-900');
+      dataCell.classList.add('border', 'border-r-4', 'border-zinc-300', 'p-2', 'group-hover:bg-zinc-900');
       dataCell.textContent = truthTable[i][j];
       dataRow.appendChild(dataCell);
     }
@@ -98,6 +99,7 @@ function displayTruthTable(truthTable) {
 
   contTruthTable.appendChild(tableElement);
 }
+
 
 function contTruthTableAnim() {
 
@@ -136,8 +138,8 @@ function contNumBarAnim() {
 function contEcuationAnim() {
   equationInput.animate(
     [
-      {opacity: 0, zIndex: 1000 },
-      {opacity: 1, zIndex: 1000}
+      { opacity: 0, zIndex: 1000 },
+      { opacity: 1, zIndex: 1000 }
     ],
     {
       duration: 1000,
