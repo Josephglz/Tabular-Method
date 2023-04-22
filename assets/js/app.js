@@ -150,3 +150,23 @@ function contEcuationAnim() {
     }
   );
 }
+
+/**
+ * 
+ * 
+arregloBITS = []
+for(var i = 0; i < output.length; i++){
+    arregloBITS.push(tabla[output[i]])
+}
+
+var cont = 0
+for(var i = 0; i < arregloBITS.length; i++) {
+    cont = 0
+    for(var j = 0; j < arregloBITS[i].length; j++) {
+        if(arregloBITS[i][j] == 1) {
+            cont++
+        }
+    }
+    console.log('En linea ' + i + 'Hay: ' + cont)
+}
+ */
