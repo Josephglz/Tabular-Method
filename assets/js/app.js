@@ -2,8 +2,10 @@ var btnStepOne = document.getElementById('btnStepOne');
 var btnStepTwo = document.getElementById('btnStepTwo');
 var contFirst = document.getElementById('ContFirstAnim');
 var contentInputs = document.getElementById('contentInputs');
+var ContTruth = document.getElementById('ContTruth');
 var contTruthTable = document.getElementById('ContTruthTable');
 var equationInput = document.getElementById('equation_input');
+var ResCont = document.getElementById('ResCont');
 
 numVariables.addEventListener('change', function () {
   contentInputs.classList.add('slide-left');
@@ -26,6 +28,7 @@ btnStepTwo.addEventListener('click', function () {
     contTruthTableAnim();
 
     displayTruthTable(truthTable);
+    displayRes();
   }
 })
 
@@ -68,10 +71,11 @@ const variablesLetter = {
 
 function displayTruthTable(truthTable) {
   const tableElement = document.createElement('table');
-  tableElement.classList.add('bg-zinc-100', 'border-collapse', 'border', 'border-zinc-200', 'rounded', 'shadow', 'text-zinc-700', 'w-1/2');
+  tableElement.classList.add('bg-zinc-100', 'border-collapse', 'border', 'border-zinc-200', 'rounded', 'shadow', 'text-zinc-700', 'w-1/2', 'relative');
+  tableElement.id = 'tableTarget';
   // Crear encabezado
   const headerRow = document.createElement('tr');
-  headerRow.classList.add('border-b', 'border-zinc-300', 'text-center', 'text-zinc-700', 'text-sm', 'group');
+  headerRow.classList.add('border-b', 'border-zinc-300', 'text-center', 'text-zinc-700', 'text-sm', 'group', 'fixed', 'top-0');
   for (let i = 0; i < truthTable[0].length; i++) {
     const headerCell = document.createElement('th');
     if (i === truthTable[0].length - 1) {
@@ -100,10 +104,26 @@ function displayTruthTable(truthTable) {
   contTruthTable.appendChild(tableElement);
 }
 
+function displayRes() {
+  const lblSimplify = document.createElement('label');
+  lblSimplify.setAttribute = 'simpRes';
+  lblSimplify.textContent = 'Resultado de la simplificación';
+
+  const inputSimplify = document.createElement('input');
+  inputSimplify.type = 'text';
+  inputSimplify.id = 'simpRes';
+  inputSimplify.classList.add('w-96', 'mb-4', 'bg-gray-50', 'border', 'border-gray-300', 'text-gray-900', 'text-sm', 'rounded-lg', 'focus:ring-blue-500', 'focus:border-blue-500', 'block', 'p-2.5');
+  inputSimplify.placeholder = 'Resultado';
+  inputSimplify.required = true;
+
+  ResCont.appendChild(lblSimplify);
+  ResCont.appendChild(inputSimplify);
+}
+
 
 function contTruthTableAnim() {
 
-  contTruthTable.animate(
+  ContTruth.animate(
     [
       { opacity: 0 },
       { opacity: 1 }
